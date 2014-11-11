@@ -1,0 +1,29 @@
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import java.util.List;
+{{appImport}}
+
+
+{{appPath}}
+public class{{className}}{
+
+        @Post
+        @Consumes({{supportMediaType}})
+        public Response createData({{model}} model);
+
+        @GET
+        @Path("{id}")
+        @Produces({{supportMediaType}})
+        public Customer getData(@PathParam("id") int id);
+
+        @GET
+        @Produces({{supportMediaType}})
+        public List<{{model}}> getDatas();
+
+        @PUT
+        @Path("{id}")
+        @Consumes({{supportMediaType}})
+        public void updateData(@PathParam("id") int id, {{model}} model);
+
+
+        }
