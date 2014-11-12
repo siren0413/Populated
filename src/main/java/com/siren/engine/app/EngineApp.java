@@ -1,5 +1,7 @@
 package com.siren.engine.app;
 
+import com.siren.engine.SystemContext;
+
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,10 +11,11 @@ import java.util.Set;
  */
 public class EngineApp extends Application{
     private Set<Object> singletons = new HashSet<>();
-    private java.util.Set<Class<?>> classes = new HashSet<>();
+    private Set<Class<?>> classes = new HashSet<>();
 
     public EngineApp() {
-
+        // export app
+        SystemContext.app = this;
     }
 
     @Override
