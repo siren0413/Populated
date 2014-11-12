@@ -3,6 +3,8 @@ package com.siren.engine.service;
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
 import com.siren.engine.model.TemplateData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -12,17 +14,19 @@ import java.util.Map;
  */
 public class TemplateCompileService {
 
-    Handlebars handlebars = null;
-    String target;
+    static Logger LOGGER = LoggerFactory.getLogger(ClassRegisterService.class);
 
-    public TemplateCompileService(String target){
+    Handlebars handlebars = null;
+
+    public TemplateCompileService(){
         handlebars = new Handlebars();
-        this.target = target;
     }
 
-    public String compile(Object data) throws IOException {
-        Template template = handlebars.compile(target);
-        String output = template.apply(data);
+    public String compile(Object data, String template) throws IOException {
+        LOGGER.info("Start template compilation for template: " + template);
+        Template temp = handlebars.compile(template);
+        String output = temp.apply(data);
+        LOGGER.info("[SUCCESS] template compilation: "+ template);
         return output;
     }
 }

@@ -7,7 +7,8 @@ import com.siren.engine.app.EngineApp;
  */
 public class SystemContext {
 
-    public static final String COMPILATION_TARGET = "restful_template.hbs";
+    public static final String APP_TEMPLATE_FILE = "app_template";
+    public static final String MODEL_TEMPLATE_FILE = "model_template";
     public static EngineApp app;
 
 }

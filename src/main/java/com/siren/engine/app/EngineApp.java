@@ -3,7 +3,9 @@ package com.siren.engine.app;
 import com.siren.engine.SystemContext;
 
 import javax.ws.rs.core.Application;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,6 +18,21 @@ public class EngineApp extends Application{
     public EngineApp() {
         // export app
         SystemContext.app = this;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Map<String, String> map = new HashMap<>();
+                map.put("className", "HelloWorld");
+                map.put("supportMediaType","MediaType.APPLICATION_JSON");
+                map.put("model","TestModel");
+                Map<String, String> modelMap = new HashMap<>();
+                modelMap.put("className","TestModel");
+                AppGenerator generator = new AppGenerator();
+                generator.generate(SystemContext.app, modelMap, "TestModel", SystemContext.MODEL_TEMPLATE_FILE, false, false);
+                generator.generate(SystemContext.app, map, "HelloWorld", SystemContext.APP_TEMPLATE_FILE, false, true);
+            }
+        }).start();
     }
 
     @Override
