@@ -1,16 +1,28 @@
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.util.List;
+import java.util.LinkedList;
+import java.net.URI;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
+
 {{appImport}}
 
 
-{{appPath}}
+@Path("{{appPath}}")
 public class {{className}} {
+
+        private static Map<Integer, {{model}}> DB = new ConcurrentHashMap<>();
+        private static AtomicInteger idCounter = new AtomicInteger();
 
         @POST
         @Consumes({{supportMediaType}})
         public Response createData({{model}} model){
-                return null;
+                model.setId(idCounter.incrementAndGet());
+                DB.put(model.getId(), model);
+                return Response.created(URI.create("/{{appPath}}/" + model.getId())).build();
         }
 
         @GET
@@ -23,7 +35,11 @@ public class {{className}} {
         @GET
         @Produces({{supportMediaType}})
         public List<{{model}}> getDatas(){
-                return null;
+                List<{{model}}> list = new LinkedList<>();
+                for ({{model}} model : DB.values()) {
+                      list.add(model);
+                 }
+                return list;
         }
 
         @PUT

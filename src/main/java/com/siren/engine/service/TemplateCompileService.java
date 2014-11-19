@@ -15,14 +15,13 @@ import java.util.Map;
 public class TemplateCompileService {
 
     static Logger LOGGER = LoggerFactory.getLogger(ClassRegisterService.class);
+    static Handlebars handlebars = null;
 
-    Handlebars handlebars = null;
-
-    public TemplateCompileService(){
+    static{
         handlebars = new Handlebars();
     }
 
-    public String compile(Object data, String template) throws IOException {
+    public static String compile(Object data, String template) throws IOException {
         LOGGER.info("Start template compilation for template: " + template);
         Template temp = handlebars.compile(template);
         String output = temp.apply(data);

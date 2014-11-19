@@ -17,25 +17,25 @@ public class ClassCompileService {
 
     static Logger LOGGER = LoggerFactory.getLogger(ClassCompileService.class);
 
-    public String compile(String src, String className, String... classpath) {
+    public static Class compile(String src, String className, String... classpath) throws ClassNotFoundException {
 
         // setup compiler
-        LOGGER.debug("Start compilation for class: "+className);
+        LOGGER.debug("Start compilation for class: " + className);
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 
-        JavaFileObject file = new JavaSourceFromString(className , src);
+        JavaFileObject file = new JavaSourceFromString(className, src);
         Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(file);
 
         // setup output dir and classpath
         String outputPath = ClassCompileService.class.getClassLoader().getResource("").getPath();
-        LOGGER.debug("Set output dir for class: "+ outputPath);
+        LOGGER.debug("Set output dir for class: " + outputPath);
         String cp = outputPath.substring(0, outputPath.indexOf("classes")) + "lib/*";
         List<String> optionList = new ArrayList<>();
         optionList.addAll(Arrays.asList("-d", outputPath));
         optionList.addAll(Arrays.asList("-cp", ClasspathUtils.buildClassPath(cp, outputPath)));
-        LOGGER.debug("Set -classpath for class: "+ outputPath);
-        LOGGER.debug("Set -classpath for class: "+ cp);
+        LOGGER.debug("Set -classpath for class: " + outputPath);
+        LOGGER.debug("Set -classpath for class: " + cp);
 
         // prepare compile
         JavaCompiler.CompilationTask task = compiler.getTask(null, null, diagnostics, optionList, null, compilationUnits);
@@ -45,7 +45,7 @@ public class ClassCompileService {
         boolean success = task.call();
 
         // handle result
-        if(!success) {
+        if (!success) {
             for (Diagnostic diagnostic : diagnostics.getDiagnostics()) {
 //                System.out.println(diagnostic.getCode());
 //                System.out.println(diagnostic.getKind());
@@ -55,15 +55,17 @@ public class ClassCompileService {
 //                System.out.println(diagnostic.getSource());
                 LOGGER.error(diagnostic.getMessage(null));
             }
+            return null;
         }
-        LOGGER.info("[SUCCESS] Compilation {class: " + className +", path: "+outputPath + className +".class"+"}");
 
-        if(success)
-            return outputPath + className +".class";
-        return null;
+        LOGGER.info("[SUCCESS] Compilation {class: " + className + ", path: " + outputPath + className + ".class" + "}");
+
+        Class clazz = Class.forName(className);
+
+        return clazz;
     }
 
-    class JavaSourceFromString extends SimpleJavaFileObject {
+    private static class JavaSourceFromString extends SimpleJavaFileObject {
         final String code;
 
         JavaSourceFromString(String name, String code) {

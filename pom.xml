@@ -19,15 +19,15 @@
     </dependency>
 
     <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-grizzly2-servlet</artifactId>
-      <version>2.13</version>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
+      <version>3.0.10.Final</version>
     </dependency>
 
     <dependency>
-      <groupId>org.glassfish.jersey.media</groupId>
-      <artifactId>jersey-media-json-jackson</artifactId>
-      <version>2.13</version>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>3.0.10.Final</version>
     </dependency>
 
     <dependency>
