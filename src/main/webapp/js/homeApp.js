@@ -21,7 +21,11 @@ app.config(function ($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'main.html'
     });
 
-    $routeProvider.otherwise({redirectTo: '/login'});
+    $routeProvider.when('/home', {
+       templateUrl: 'home.html'
+    });
+
+    $routeProvider.otherwise({redirectTo: '/main'});
 
     $locationProvider.html5Mode(true);
 });
@@ -38,8 +42,7 @@ app.controller('loginCtrl', function($scope, $window, $location, $http, $base64,
         }).success(function(data){
             if(data.status){
                 $window.localStorage.token = data.token;
-                $location.path('/main');
-                //$location.replace();
+                $location.path('/home');
             }else{
                 $scope.message = 'username/password incorrect';
             }
@@ -48,4 +51,10 @@ app.controller('loginCtrl', function($scope, $window, $location, $http, $base64,
         });
 
     }
+});
+
+app.controller('mainCtrl', function($scope, $location){
+    $scope.showLoginPage = function(){
+        $location.path('/login');
+    };
 });
