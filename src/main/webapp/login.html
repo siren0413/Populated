@@ -1,0 +1,61 @@
+<style type="text/css">
+    body {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+    }
+
+    .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    }
+
+    .form-signin .form-signin-heading {
+        margin-bottom: 10px;
+    }
+
+    .form-horizontal .control-label {
+        width:auto;
+    }
+
+    .form-horizontal .controls {
+        margin-left: 40px;
+    }
+
+    .error-message {
+        margin-top: 10px;
+    }
+</style>
+
+<form class="form-horizontal form-signin" ng-controller="loginCtrl">
+    <h2 class="form-signin-heading">请登录</h2>
+
+    <hr>
+
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">账号</label>
+        <div class="controls">
+            <input type="text" id="inputEmail" placeholder="请输出您的邮箱" ng-model="username"/>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="inputPassword">密码</label>
+        <div class="controls">
+            <input type="password" id="inputPassword" placeholder="请输入您的密码" ng-model="password"/>
+        </div>
+    </div>
+
+    <button class="btn btn-primary btn-block" ng-click="login()">登录</button>
+
+    <p class="text-error error-message" ng-hide="status"><i class="icon-tint"></i> {{ message }}</p>
+</form>

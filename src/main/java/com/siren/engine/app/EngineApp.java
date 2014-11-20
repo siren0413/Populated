@@ -16,7 +16,6 @@ import java.util.Map;
 /**
  * Created by yijunmao on 11/11/14.
  */
-@ApplicationPath("/")
 public class EngineApp extends Application{
 
     public EngineApp(@Context final Dispatcher dispatcher) {
@@ -27,11 +26,7 @@ public class EngineApp extends Application{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
 
                 Map<String, String> map = new HashMap<>();
                 map.put("className", "HelloWorld");
